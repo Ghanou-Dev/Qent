@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qent/pages/home_page.dart';
 import 'package:qent/pages/login.dart';
 import 'package:qent/pages/register.dart';
 import 'package:qent/pages/reset_password.dart';
@@ -25,6 +26,7 @@ class Qent extends StatelessWidget {
         Register.pageRoute: (context) => Register(),
         ResetPassword.pageRoute: (context) => ResetPassword(),
         VerifyPhoneNumber.pageRoute: (context) => VerifyPhoneNumber(),
+        HomePage.pageRoute: (context) => HomePage(),
       },
     );
   }

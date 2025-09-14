@@ -74,7 +74,7 @@ class _SecondBoardState extends State<SecondBoard> {
                     color: Colors.white,
                   ),
                 ),
-                Gap(250),
+                Gap(350),
                 Text(
                   'Discover your next adventure with Qent. we’re here to\nprovide you with a seamless car rental experience.\nLet’s get started on your journey.',
                   style: TextStyle(

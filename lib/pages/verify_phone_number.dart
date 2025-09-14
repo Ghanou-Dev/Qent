@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:high_q_paginated_drop_down/high_q_paginated_drop_down.dart';
 import 'package:qent/constants/const.dart';
-import 'package:qent/models/country.dart';
+import 'package:qent/models/country_model.dart';
 import 'package:qent/pages/confirmation.dart';
+import 'package:qent/pages/home_page.dart';
 import 'package:qent/widgets/custom_elevated_button.dart';
 import 'package:qent/widgets/custom_text_field.dart';
 
@@ -34,7 +35,7 @@ class _VerifyPhoneNumberState extends State<VerifyPhoneNumber> {
     name: 'الجزائر',
     flag: 'assets/flags/dz.png',
   );
-  Country? selectedCountry ;
+  Country? selectedCountry;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -147,18 +148,6 @@ class _VerifyPhoneNumberState extends State<VerifyPhoneNumber> {
                           });
                         },
                       ),
-                      // CountryCodePicker(
-                      //   onChanged: (country) {
-                      //     keyNumber = country.dialCode;
-                      //   },
-                      //   onInit: (countryCode) {
-                      //     keyNumber = countryCode!.dialCode;
-                      //   },
-                      //   initialSelection: 'DZ',
-                      //   favorite: ['+1', 'DZ'],
-                      //   showCountryOnly: false,
-                      //   showOnlyCountryWhenClosed: false,
-                      // ),
                       Gap(20),
                       CustomTextField(
                         validator: (value) {
@@ -180,7 +169,9 @@ class _VerifyPhoneNumberState extends State<VerifyPhoneNumber> {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => Confirmation(
-                                  keyNumber: selectedCountry?.dialCode ?? initCountry.dialCode,
+                                  keyNumber:
+                                      selectedCountry?.dialCode ??
+                                      initCountry.dialCode,
                                   number: number!,
                                 ),
                               ),
@@ -192,6 +183,18 @@ class _VerifyPhoneNumberState extends State<VerifyPhoneNumber> {
                         title: 'Continue ',
                         backgroundColor: kBlack,
                         foregroundColor: kWhite,
+                      ),
+                      Gap(30),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(
+                            context,
+                          ).pushReplacementNamed(HomePage.pageRoute);
+                        },
+                        child: Text(
+                          'Skip !',
+                          style: TextStyle(fontSize: 16, color: kBlack),
+                        ),
                       ),
                     ],
                   ),

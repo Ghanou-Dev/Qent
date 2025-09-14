@@ -33,153 +33,186 @@ class _LoginState extends State<Login> {
 
   bool checkActive = false;
   bool secure = true;
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Image.asset(
-                      "assets/images/logo_dark.png",
-                      width: 36,
-                      height: 36,
-                    ),
-                    Gap(8),
-                    Text(
-                      'Qent',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 22,
+          child: Form(
+            key: formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Image.asset(
+                        "assets/images/logo_dark.png",
+                        width: 36,
+                        height: 36,
                       ),
-                    ),
-                  ],
-                ),
-                Gap(30),
-                Text(
-                  'Welcome Back \nReady to hit the road.',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                ),
-                Gap(40),
-                CustomTextField(hint: 'Email/Phone Number', isPassword: false),
-                Gap(15),
-                CustomTextField(
-                  hint: 'Password',
-                  isPassword: secure,
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        secure = !secure;
-                      });
-                    },
-                    icon: Icon(
-                      secure ? Icons.visibility_off : Icons.visibility,
-                    ),
+                      Gap(8),
+                      Text(
+                        'Qent',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                Gap(20),
-                Row(
-                  children: <Widget>[
-                    Checkbox(
-                      activeColor: Color(0xff454545),
-                      value: checkActive,
-                      onChanged: (value) {
+                  Gap(30),
+                  Text(
+                    'Welcome Back \nReady to hit the road.',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  ),
+                  Gap(40),
+                  CustomTextField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Field is required !';
+                      }
+                      return null;
+                    },
+                    controller: emailController,
+                    hint: 'Email/Phone Number',
+                    isPassword: false,
+                  ),
+                  Gap(15),
+                  CustomTextField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Field is required !';
+                      }
+                      return null;
+                    },
+                    controller: passwordController,
+                    hint: 'Password',
+                    isPassword: secure,
+                    suffixIcon: IconButton(
+                      onPressed: () {
                         setState(() {
-                          checkActive = value ?? false;
+                          secure = !secure;
                         });
                       },
+                      icon: Icon(
+                        secure ? Icons.visibility_off : Icons.visibility,
+                      ),
                     ),
-                    Text(
-                      'Remember Me',
-                      style: TextStyle(fontSize: 14, color: Color(0xff7f7f7f)),
-                    ),
-                    Spacer(),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(
-                          context,
-                        ).pushNamed(ResetPassword.pageRoute);
-                      },
-                      child: Text(
-                        'Forgot Password',
+                  ),
+                  Gap(20),
+                  Row(
+                    children: <Widget>[
+                      Checkbox(
+                        activeColor: Color(0xff454545),
+                        value: checkActive,
+                        onChanged: (value) {
+                          setState(() {
+                            checkActive = value ?? false;
+                          });
+                        },
+                      ),
+                      Text(
+                        'Remember Me',
                         style: TextStyle(
                           fontSize: 14,
                           color: Color(0xff7f7f7f),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Gap(20),
-                CustomElevatedButton(
-                  onpressed: () {},
-                  title: 'Login',
-                  backgroundColor: kBlack,
-                  foregroundColor: kWhite,
-                ),
-                Gap(10),
-                CustomElevatedButton(
-                  onpressed: () {
-                    Navigator.of(context).pushNamed(Register.pageRoute);
-                  },
-                  title: 'Sing up',
-                  backgroundColor: kGrey4,
-                  foregroundColor: kBlack,
-                ),
-                Gap(20),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.43,
-                      child: Divider(color: Color(0xffD9D9D9), thickness: 2),
-                    ),
-                    Gap(5),
-                    Text(
-                      'Or',
-                      style: TextStyle(fontSize: 14, color: Color(0xff7f7f7f)),
-                    ),
-                    Gap(5),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.43,
-                      child: Divider(color: Color(0xffD9D9D9), thickness: 2),
-                    ),
-                  ],
-                ),
-                Gap(20),
-                CustomPayButton(
-                  title: 'Apple Pay',
-                  icon: FontAwesomeIcons.apple,
-                  onpressed: () {},
-                ),
-                Gap(10),
-                CustomPayButton(
-                  title: 'Google Pay',
-                  icon: FontAwesomeIcons.google,
-                  onpressed: () {},
-                ),
-                Gap(10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Don\'t have an account?',
-                      style: TextStyle(fontSize: 14, color: kGrey2),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Sign Up.',
-                        style: TextStyle(fontSize: 14, color: kBlack),
+                      Spacer(),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(
+                            context,
+                          ).pushNamed(ResetPassword.pageRoute);
+                        },
+                        child: Text(
+                          'Forgot Password',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Color(0xff7f7f7f),
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                  Gap(20),
+                  CustomElevatedButton(
+                    onpressed: () {},
+                    title: 'Login',
+                    backgroundColor: kBlack,
+                    foregroundColor: kWhite,
+                  ),
+                  Gap(10),
+                  CustomElevatedButton(
+                    onpressed: () {
+                      Navigator.of(
+                        context,
+                      ).pushReplacementNamed(Register.pageRoute);
+                    },
+                    title: 'Sing up',
+                    backgroundColor: kGrey4,
+                    foregroundColor: kBlack,
+                  ),
+                  Gap(20),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.43,
+                        child: Divider(color: Color(0xffD9D9D9), thickness: 2),
+                      ),
+                      Gap(5),
+                      Text(
+                        'Or',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color(0xff7f7f7f),
+                        ),
+                      ),
+                      Gap(5),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.43,
+                        child: Divider(color: Color(0xffD9D9D9), thickness: 2),
+                      ),
+                    ],
+                  ),
+                  Gap(20),
+                  CustomPayButton(
+                    title: 'Apple Pay',
+                    icon: FontAwesomeIcons.apple,
+                    onpressed: () {},
+                  ),
+                  Gap(10),
+                  CustomPayButton(
+                    title: 'Google Pay',
+                    icon: FontAwesomeIcons.google,
+                    onpressed: () {},
+                  ),
+                  Gap(10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Don\'t have an account?',
+                        style: TextStyle(fontSize: 14, color: kGrey2),
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Sign Up.',
+                          style: TextStyle(fontSize: 14, color: kBlack),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

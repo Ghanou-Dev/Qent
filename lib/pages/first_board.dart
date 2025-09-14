@@ -76,7 +76,7 @@ class _FirstBoardState extends State<FirstBoard> {
                     color: Colors.white,
                   ),
                 ),
-                Gap(360),
+                Gap(460),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xff21292b),
